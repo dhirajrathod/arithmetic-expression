@@ -2,7 +2,6 @@ package com.pegasus.arithmetic.expression.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pegasus.arithmetic.expression.commons.Common;
-import com.pegasus.arithmetic.expression.commons.EvaluateString;
 import com.pegasus.arithmetic.expression.commons.Logs;
 import com.pegasus.arithmetic.expression.entity.ArithmeticExpressionDetails;
 import com.pegasus.arithmetic.expression.service.ArithmeticExpressionService;
@@ -45,19 +42,22 @@ public class ArithmeticExpressionSEPLController {
 			BindingResult result, Model model) {
 		String output = StringUtils.EMPTY;
 		try {
-			output = EvaluateString.evaluate(arithmeticExpressionDetails.getExpression());
 
-			if (StringUtils.isNotEmpty(output)) {
-				String pattern = "yyyy-MM-dd HH:mm:ss";
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-				String currentDateTime = simpleDateFormat.format(new Date());
-
-				arithmeticExpressionDetails.setOutput(output);
-				arithmeticExpressionDetails.setCreatedDatetime(currentDateTime);
-				arithmeticExpressionDetails.setUpdatedDatetime(currentDateTime);
-
-				arithmeticExpressionService.saveArithmeticExpression(arithmeticExpressionDetails);
+			ExpressionParser parser = new SpelExpressionParser();
+			Object parsedValue = parser.parseExpression(arithmeticExpressionDetails.getExpression()).getValue();
+			if (parsedValue != null) {
+				output = String.valueOf(parsedValue);
 			}
+
+			String pattern = "yyyy-MM-dd HH:mm:ss";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String currentDateTime = simpleDateFormat.format(new Date());
+
+			arithmeticExpressionDetails.setOutput(output);
+			arithmeticExpressionDetails.setCreatedDatetime(currentDateTime);
+			arithmeticExpressionDetails.setUpdatedDatetime(currentDateTime);
+
+			arithmeticExpressionService.saveArithmeticExpression(arithmeticExpressionDetails);
 		} catch (Exception e) {
 			LOGGER.error("Exception occurred in arithmeticExpressionEvaluateSEPL in ArithmeticExpressionSEPLController : "
 					+ e.getMessage());

@@ -12,6 +12,14 @@ $(document).ready(function() {
 	
 });
 
+function callEnterKeyPress(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if (charCode === 13) {
+        submitForm();
+        return false;
+    }
+}
+
 function submitForm() {
 	$('#please-wait-data').show();
 	$('#div-errors').hide();

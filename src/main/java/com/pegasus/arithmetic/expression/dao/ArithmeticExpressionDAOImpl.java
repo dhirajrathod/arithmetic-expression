@@ -2,39 +2,46 @@ package com.pegasus.arithmetic.expression.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pegasus.arithmetic.expression.commons.HibernateUtil;
+import com.pegasus.arithmetic.expression.commons.Logs;
 import com.pegasus.arithmetic.expression.entity.ArithmeticExpressionDetails;
 
 @Repository
 public class ArithmeticExpressionDAOImpl implements ArithmeticExpressionDAO {
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+	
+	private static final Logger LOGGER = Logs.getAppLoggers();
 
 	@Override
 	public void saveArithmeticExpression(ArithmeticExpressionDetails arithmeticExpressionDetails) {
-		Session session = this.sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.persist(arithmeticExpressionDetails);
-		tx.commit();
-		session.close();
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			session.save(arithmeticExpressionDetails);
+			transaction.commit();
+		} catch (Exception e) {
+			HibernateUtil.closeTransaction(transaction);
+			LOGGER.error("Exception occurred in saveArithmeticExpression in ArithmeticExpressionDAOImpl : " + e.getMessage());
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ArithmeticExpressionDetails> listArithmeticExpression() {
-		Session session = this.sessionFactory.openSession();
-		List<ArithmeticExpressionDetails> arithmeticExpressionDetailsList = session.createQuery("from ArithmeticExpressionDetails order by id desc").list();
-		session.close();
+		List<ArithmeticExpressionDetails> arithmeticExpressionDetailsList = null;
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			arithmeticExpressionDetailsList = session.createQuery("from ArithmeticExpressionDetails order by id desc")
+					.list();
+		} catch (Exception e) {
+			HibernateUtil.closeTransaction(transaction);
+			LOGGER.error("Exception occurred in listArithmeticExpression in ArithmeticExpressionDAOImpl : " + e.getMessage());
+		}
 		return arithmeticExpressionDetailsList;
 	}
 

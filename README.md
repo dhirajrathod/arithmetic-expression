@@ -30,8 +30,6 @@ Steps To run the application :
 -------------------
 * Checkout or download the project from github.
 * Import this project in Eclipse Using Existing Project.
-* Execute the mysql database file to the mysql server. Database file is available in root folder of project named as database.sql.
-* Once done execution of database change the url, username, password and database name in file  arithmetic-expression\WebContent\WEB-INF\jdbc.properties 
 * Now clean the project and build it.
 * Now run the project.
 

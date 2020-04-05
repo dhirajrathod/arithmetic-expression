@@ -11,7 +11,6 @@ public class EvaluateString {
     public static String evaluate(String expression) {
         String returnValue = StringUtils.EMPTY;
         try {
-
             char[] tokens = expression.toCharArray();
 
             Stack<Integer> values = new Stack<>();
@@ -23,9 +22,9 @@ public class EvaluateString {
                 }
 
                 if (tokens[i] >= '0' && tokens[i] <= '9') {
-                    StringBuilder sbuf = new StringBuilder();
-                    sbuf.append(tokens[i]);
-                    values.push(Integer.parseInt(sbuf.toString()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(tokens[i]);
+                    values.push(Integer.parseInt(stringBuilder.toString()));
                 } else if (tokens[i] == '(') {
                     ops.push(tokens[i]);
                 } else if (tokens[i] == ')') {
@@ -69,10 +68,11 @@ public class EvaluateString {
             case '*':
                 return a * b;
             case '/':
-                if (b == 0) {
+            	if (b == 0) {
                     throw new UnsupportedOperationException("Cannot divide by zero");
+                } else {
+                    return a / b;
                 }
-                return a / b;
         }
         return 0;
     }

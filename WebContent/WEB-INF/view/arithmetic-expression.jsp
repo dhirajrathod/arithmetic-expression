@@ -59,7 +59,7 @@
 								<label>Arithmetic Expression</label>
 							</div>
 							<div class="col-md-10">
-								<form:input path="expression" class="form-control" placeholder="Arithmetic Expression" id="expression" />
+								<form:input path="expression" class="form-control" placeholder="Arithmetic Expression" id="expression" onkeypress="callEnterKeyPress(event);"/>
 							</div>
 						</div>
 						<div class="form-group col-md-12">
