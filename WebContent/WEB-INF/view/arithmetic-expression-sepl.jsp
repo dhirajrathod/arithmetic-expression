@@ -5,6 +5,7 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="jspcustomtags" uri="/WEB-INF/view/messages.tld"%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -41,7 +42,9 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<h2 class="text-center">Arithmetic Expression</h2>
+					<h2 class="text-center">
+						<jspcustomtags:headings>heading2</jspcustomtags:headings>
+					</h2>
 					<hr>
 				</div>
 				<div class="col-md-12 col-sm-12 col-xs-12">
@@ -88,7 +91,9 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<h2 class="text-center">Arithmetic Expression History</h2>
+					<h2 class="text-center">
+						<jspcustomtags:headings>heading3</jspcustomtags:headings>
+					</h2>
 					<hr>
 				</div>
 				<div class="col-md-12 col-sm-12 col-xs-12">
@@ -100,6 +105,15 @@
 							<th width="20%">Created Date Time</th>
 						</tr>
 						<tbody id="arithmeticExpressionList">
+							<c:forEach items="${arithmeticExpressions}"
+								var="arithmeticExpression" varStatus="loop">
+								<tr>
+									<td>${(loop.index + 1)}</td>
+									<td>${arithmeticExpression.expression}</td>
+									<td>${arithmeticExpression.output}</td>
+									<td>${arithmeticExpression.createdDatetime}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

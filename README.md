@@ -11,14 +11,14 @@ Technologies Used :
 * Use of Java 8
 * Used collections, streams, and lambdas expression.
 * Spring MVC.
-* JSP and JSP tags.
+* JSP and JSP tags. (Custom JSP Tags)
 * Spring Tags
 * Javascript/JQuery, Ajax, JSON
 * CSS3 and HTML5
 * Spring annotations - @Service, @Repository, @Entity, @Controller
 * JPA/Hibernate with h2 dB
 * Maven POM
-* Database : MySQL 8
+* Database : Hibernate h2 DB2
 
 To get the code:
 -------------------

@@ -32,6 +32,7 @@ public class ArithmeticExpressionSEPLController {
 	@RequestMapping(value = "/arithmetic-expression-sepl", method = RequestMethod.GET)
 	public String arithmeticExpressionSEPL(ModelMap model) {
 		model.addAttribute("arithmeticExpressionDetails", new ArithmeticExpressionDetails());
+		model.addAttribute("arithmeticExpressions", this.arithmeticExpressionService.listArithmeticExpression());
 		return "arithmetic-expression-sepl";
 	}
 

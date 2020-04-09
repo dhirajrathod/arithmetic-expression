@@ -34,6 +34,7 @@ public class ArithmeticExpressionController {
 	@RequestMapping(value = "/arithmetic-expression", method = RequestMethod.GET)
 	public String arithmeticExpression(ModelMap model) {
 		model.addAttribute("arithmeticExpressionDetails", new ArithmeticExpressionDetails());
+		model.addAttribute("arithmeticExpressions", this.arithmeticExpressionService.listArithmeticExpression());
 		return "arithmetic-expression";
 	}
 

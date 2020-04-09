@@ -7,8 +7,6 @@ $(document).ready(function() {
 	$("#submitForm").on('click', function() {
 		submitForm();
 	});
-
-	getArithmeticExpressionList();
 	
 });
 
